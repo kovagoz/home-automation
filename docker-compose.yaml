@@ -1,0 +1,63 @@
+---
+version: '3.6'
+services:
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:1.29.2
+    environment:
+      - TZ=${TIMEZONE}
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./services/zigbee2mqtt/data:/app/data
+      - ./services/zigbee2mqtt/configuration.yaml:/app/configuration.yaml:ro
+      - ./services/zigbee2mqtt/network_key.yaml:/app/network_key.yaml:ro
+    devices:
+      - ${ZIGBEE_DEVICE}:/dev/ttyACM0
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0.15
+    environment:
+      - TZ=${TIMEZONE}
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    restart: unless-stopped
+
+  # nodered:
+  #   build:
+  #     context: ./services/nodered/.
+  #     args:
+  #       - DOCKERHUB_TAG=latest
+  #       - EXTRA_PACKAGES=
+  #   restart: unless-stopped
+  #   user: "0"
+  #   environment:
+  #     - TZ=${TIMEZONE}
+  #   ports:
+  #     - "1880:1880"
+  #   volumes:
+  #     - ./volumes/nodered/data:/data
+  #     - ./volumes/nodered/ssh:/root/.ssh
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+  #   devices:
+  #     - "/dev/ttyAMA0:/dev/ttyAMA0"
+  #     - "/dev/vcio:/dev/vcio"
+  #     - "/dev/gpiomem:/dev/gpiomem"
+
+  homebridge:
+    image: oznu/homebridge:2023-01-08
+    environment:
+      - TZ=${TIMEZONE}
+      - PGID=1000
+      - PUID=1000
+      - HOMEBRIDGE_CONFIG_UI=1
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+    volumes:
+      - ./services/homebridge/data:/homebridge
+    network_mode: host
+    restart: unless-stopped
