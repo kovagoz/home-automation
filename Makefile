@@ -44,9 +44,20 @@ ifeq (,$(wildcard ./.env))
 	$(error You must run "make install" first)
 endif
 	docker compose up -d
+#
+# If package.json does not exist, it means, that homebridge container
+# has never been started, so we have to install the z2m plugin after
+# the first start.
+#
 ifeq (,$(wildcard ./services/homebridge/data/package.json))
 	docker compose exec homebridge hb-service add homebridge-z2m
-# TODO configure the homebridge-z2m plugin
+#
+# Add z2m configuration to the main homebridge config.
+#
+	cat services/homebridge/data/config.json \
+		| jq -r --argjson z2m "$$(<services/homebridge/z2m.json)" '.platforms += [$$z2m]' \
+		> /tmp/config.json
+	sudo mv /tmp/config.json services/homebridge/data
 endif
 
 .PHONY: down
