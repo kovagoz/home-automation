@@ -79,4 +79,4 @@ uninstall: ## Delete all configuration
 
 .PHONY: sync
 sync:
-	rsync -a . pi@192.168.68.69:/home/pi/testbench
+	rsync -a --exclude .git . pi@192.168.68.69:/home/pi/testbench
