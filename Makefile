@@ -4,6 +4,9 @@ ifneq (1,$(VERBOSE))
 .SILENT:
 endif
 
+#
+# Write bold message to the console.
+#
 define notice
 	@echo -e '\033[1m$(bullet) $(1)\033[0m'
 endef
@@ -12,7 +15,7 @@ bullet := ✓
 
 .PHONY: help
 help: col_width := 11
-help:
+help: ## Show this help screen
 	@echo
 	@echo 'Usage: make <target>'
 	@echo
@@ -64,11 +67,18 @@ endif
 down: ## Destroy all containers
 	docker compose down
 
+#
+# Generate a 128 bit network encryption key and store it in a separate file.
+# It is referenced from the zigbee2mqtt configuration (advanced.network_key).
+#
 services/zigbee2mqtt/network_key.yaml:
 	$(call notice,Generate Zigbee network key)
 	echo network_key: > $@
 	for i in {1..16}; do echo "  - $$(( $$RANDOM % 255 ))" >> $@; done
 
+#
+# Delete all generated data and the files created by containers.
+#
 .PHONY: uninstall
 uninstall: ## Delete all configuration
 	sudo rm -rf \
