@@ -22,32 +22,10 @@ services:
     environment:
       - TZ=${TIMEZONE}
     ports:
-      - "1883:1883"
+      - '1883:1883'
     volumes:
       - ./services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     restart: unless-stopped
-
-  # nodered:
-  #   build:
-  #     context: ./services/nodered/.
-  #     args:
-  #       - DOCKERHUB_TAG=latest
-  #       - EXTRA_PACKAGES=
-  #   restart: unless-stopped
-  #   user: "0"
-  #   environment:
-  #     - TZ=${TIMEZONE}
-  #   ports:
-  #     - "1880:1880"
-  #   volumes:
-  #     - ./volumes/nodered/data:/data
-  #     - ./volumes/nodered/ssh:/root/.ssh
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
-  #   devices:
-  #     - "/dev/ttyAMA0:/dev/ttyAMA0"
-  #     - "/dev/vcio:/dev/vcio"
-  #     - "/dev/gpiomem:/dev/gpiomem"
 
   homebridge:
     image: oznu/homebridge:2023-01-08
@@ -60,4 +38,14 @@ services:
     volumes:
       - ./services/homebridge/data:/homebridge
     network_mode: host
+    restart: unless-stopped
+
+  nodered:
+    image: nodered/node-red:2.2.3-minimal
+    environment:
+      - TZ=${TIMEZONE}
+    ports:
+      - '1880:1880'
+    volumes:
+      - ./services/nodered/data:/data
     restart: unless-stopped

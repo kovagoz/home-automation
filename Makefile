@@ -1,5 +1,9 @@
 SHELL := /bin/bash
 
+#
+# Set VERBOSE=1 environment variable if you want to see
+# the commands executed.
+#
 ifneq (1,$(VERBOSE))
 .SILENT:
 endif
@@ -24,10 +28,11 @@ help: ## Show this help screen
 	@echo
 
 .PHONY: install
-install: .env ## Configure the IoT stack
-install: services/zigbee2mqtt/data
-install: services/homebridge/data
-install: services/zigbee2mqtt/network_key.yaml
+install: | .env ## Configure the IoT stack
+install: | services/zigbee2mqtt/data
+install: | services/homebridge/data
+install: | services/nodered/data
+install: | services/zigbee2mqtt/network_key.yaml
 
 .env:
 	$(call notice,Set time zone)
