@@ -49,3 +49,10 @@ services:
     volumes:
       - ./services/nodered/data:/data
     restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - '8000:80'
+    volumes:
+      - ./services/nginx/index.html:/usr/share/nginx/html/index.html:ro
