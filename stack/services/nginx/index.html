@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Automation</title>
+    <style>
+        body { padding: 0; margin: 0; font-family: "Helvetica Neue", sans-serif; }
+        a { color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .container { display: flex; flex-direction: column; height: 100vh; }
+        header { padding: 0 1em; border-bottom: 3px solid #222; }
+        iframe { border: 0; flex-grow: 1; }
+        h2 { display: inline-block; margin-right: 1em; }
+        ul, li { display: inline-block; padding: 0; margin: 0; }
+        li { margin: 0 1em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h2>Home Automation</h2>
+        <ul>
+          <li><a href="#" class="svc" target="app" data-port="8001">Zigbee2MQTT</a></li>
+          <li><a href="#" class="svc" target="app" data-port="8002">Homebridge</a></li>
+          <li><a href="#" class="svc" target="app" data-port="8003">Node-RED</a></li>
+        </ul>
+    </header>
+    <iframe name="app"></iframe>
+</div>
+
+<script>
+    document.querySelectorAll('.svc').forEach((a) => {
+        const url = new URL(document.URL)
+        url.port = a.dataset.port
+        a.setAttribute('href', url.toString())
+    })
+</script>
+
+</body>
+</html>

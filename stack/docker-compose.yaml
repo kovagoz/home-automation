@@ -6,7 +6,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
     ports:
-      - '8080:8080'
+      - '127.0.0.1:8080:8080'
     volumes:
       - ./services/zigbee2mqtt/data:/app/data
       - ./services/zigbee2mqtt/configuration.yaml:/app/configuration.yaml:ro
@@ -22,7 +22,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
     ports:
-      - '1883:1883'
+      - '127.0.0.1:1883:1883'
     volumes:
       - ./services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     restart: unless-stopped
@@ -34,7 +34,6 @@ services:
       - PGID=1000
       - PUID=1000
       - HOMEBRIDGE_CONFIG_UI=1
-      - HOMEBRIDGE_CONFIG_UI_PORT=8581
     volumes:
       - ./services/homebridge/data:/homebridge
     network_mode: host
@@ -45,14 +44,19 @@ services:
     environment:
       - TZ=${TIMEZONE}
     ports:
-      - '1880:1880'
+      - '127.0.0.1:1880:1880'
     volumes:
       - ./services/nodered/data:/data
     restart: unless-stopped
 
   nginx:
     image: nginx:latest
-    ports:
-      - '8000:80'
     volumes:
       - ./services/nginx/index.html:/usr/share/nginx/html/index.html:ro
+      - ./services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    cap_add:
+      - CAP_NET_BIND_SERVICE
+    network_mode: host
+    depends_on:
+      - zigbee2mqtt
+      - nodered

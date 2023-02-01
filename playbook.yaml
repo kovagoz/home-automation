@@ -1,0 +1,64 @@
+---
+- name: Prepare system for the home automation stack
+  hosts: all
+  vars:
+    iot_user: "{{ lookup('env', 'ANSIBLE_REMOTE_USER') }}"
+    install_dir: "/home/{{ iot_user }}"
+  tasks:
+
+    # We don't need IPv6 on the local network, so turn it off.
+    - name: Disable IPv6
+      sysctl:
+        name: "{{ item }}"
+        value: "1"
+      loop:
+        - net.ipv6.conf.all.disable_ipv6
+        - net.ipv6.conf.default.disable_ipv6
+        - net.ipv6.conf.lo.disable_ipv6
+
+    - name: Install Docker and jq
+      package:
+        name:
+          - docker-compose
+          - jq
+
+    # Without this, user cannot access the Docker daemon.
+    - name: Configure IoT user
+      user:
+        name: "{{ iot_user }}"
+        groups: docker
+        append: yes
+
+    - name: Create the install directory and set ownership
+      file:
+        path: "{{ install_dir }}"
+        state: directory
+        owner: "{{ iot_user }}"
+        group: "{{ iot_user }}"
+
+    - name: Upload the IoT stack
+      become_user: "{{ iot_user }}"
+      synchronize:
+        # Slash is important at the end, because this way the stack
+        # directory will be ignored and only its content will be
+        # copied to the remote host.
+        src: stack/
+        dest: "{{ install_dir }}"
+        # This file is uploaded with the copy module, because if it
+        # exists, we don't want to overwrite it like the synchronize
+        # module does.
+        rsync_opts:
+          - "--exclude=services/homebridge/config.json"
+
+    - name: Configure the IoT stack
+      become_user: "{{ iot_user }}"
+      make:
+        chdir: "{{ install_dir }}"
+        target: configure
+
+    - name: Upload Homebridge configuration
+      become_user: "{{ iot_user }}"
+      copy:
+        src: stack/services/homebridge/config.json
+        dest: "{{ install_dir }}/services/homebridge/data/config.json"
+        force: no
