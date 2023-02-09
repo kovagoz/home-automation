@@ -16,11 +16,9 @@
         - net.ipv6.conf.default.disable_ipv6
         - net.ipv6.conf.lo.disable_ipv6
 
-    - name: Install Docker and jq
+    - name: Install Docker
       package:
-        name:
-          - docker-compose
-          - jq
+        name: docker-compose
 
     # Without this, user cannot access the Docker daemon.
     - name: Configure IoT user

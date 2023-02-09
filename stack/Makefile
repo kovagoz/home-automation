@@ -59,14 +59,6 @@ endif
 #
 ifeq (,$(wildcard ./services/homebridge/data/package.json))
 	docker-compose exec homebridge hb-service add homebridge-z2m
-#
-# Add z2m configuration to the main homebridge config.
-# TODO wait for the homebridge container
-#
-	cat services/homebridge/data/config.json \
-		| jq -r --argjson z2m "$$(<services/homebridge/z2m.json)" '.platforms += [$$z2m]' \
-		> /tmp/config.json
-	sudo mv /tmp/config.json services/homebridge/data
 endif
 
 .PHONY: down
