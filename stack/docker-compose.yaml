@@ -52,7 +52,7 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./services/nginx/index.html:/usr/share/nginx/html/index.html:ro
+      - ./services/nginx/docroot:/usr/share/nginx/html:ro
       - ./services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./services/nginx/htpasswd:/etc/nginx/htpasswd:ro
     cap_add:

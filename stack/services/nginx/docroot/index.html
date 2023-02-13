@@ -14,7 +14,7 @@
             <i class="bi-house-door-fill d-inline-block me-1"></i>
             Home Automation
         </a>
-        <ul class="navbar-nav me-auto">
+        <ul class="navbar-nav w-100">
             <li class="nav-item">
                 <a href="#" class="nav-link" target="app" data-port="8001">Zigbee2MQTT</a>
             </li>
@@ -24,6 +24,9 @@
             <li class="nav-item">
                 <a href="#" class="nav-link" target="app" data-port="8003">Node-RED</a>
             </li>
+            <li class="nav-item ms-auto">
+                <a href="/logout" class="nav-link">Logout <i class="bi bi-box-arrow-right"></i></a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -31,7 +34,7 @@
 <iframe name="app" class="w-100 flex-grow-1"></iframe>
 
 <script>
-    const links = document.querySelectorAll('.nav-link');
+    const links = document.querySelectorAll('a[target="app"]');
     links.forEach((a) => {
         const url = new URL(document.URL);
         url.port  = a.dataset.port;
