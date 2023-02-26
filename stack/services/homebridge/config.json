@@ -4,7 +4,10 @@
       "name": "Config",
       "host": "127.0.0.1",
       "port": 8581,
-      "platform": "config"
+      "platform": "config",
+      "auth": "none",
+      "theme": "blue-grey",
+      "debug": false
     },
     {
       "mqtt": {

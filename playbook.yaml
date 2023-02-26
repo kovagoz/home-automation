@@ -47,6 +47,7 @@
         # This file is uploaded later to the proper place with the copy module.
         rsync_opts:
           - "--exclude=services/homebridge/config.json"
+          - "--exclude=services/homebridge/auth.json"
 
     - name: Configure the IoT stack
       become_user: "{{ iot_user }}"
@@ -59,6 +60,13 @@
       copy:
         src: stack/services/homebridge/config.json
         dest: "{{ install_dir }}/services/homebridge/data/config.json"
+        force: no
+
+    - name: Upload Homebridge auth
+      become_user: "{{ iot_user }}"
+      copy:
+        src: stack/services/homebridge/auth.json
+        dest: "{{ install_dir }}/services/homebridge/data/auth.json"
         force: no
 
     - name: Generate htpasswd for nginx
