@@ -10,8 +10,8 @@
     - common
     - docker
     - mosquitto
+    - zigbee2mqtt
   tasks:
-
     - name: Launch nginx
       docker_container:
         name: nginx
