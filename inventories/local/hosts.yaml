@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+    vbox:
+      ansible_host: docker.for.mac.host.internal
+      ansible_port: 2222
+      ansible_connection: ssh
+      ansible_user: vagrant
+      ansible_become: true
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+      ansible_ssh_private_key_file: "~/.ssh/id_rsa"

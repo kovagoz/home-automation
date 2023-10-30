@@ -1,0 +1,13 @@
+# ref: https://mosquitto.org/man/mosquitto-conf-5.html
+
+listener 1883
+
+persistence false
+persistence_location /mosquitto/data
+
+log_dest stdout
+log_timestamp_format %Y-%m-%dT%H:%M:%S
+
+connection_messages false
+
+allow_anonymous true

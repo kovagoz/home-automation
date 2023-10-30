@@ -1,0 +1,22 @@
+---
+- name: Create mosquitto configuration directory
+  file:
+    path: "{{ iot_home }}/services/mosquitto"
+    state: directory
+    recurse: yes
+
+- name: Upload mosquitto configuration
+  template:
+    src: mosquitto.conf.j2
+    dest: "{{ iot_home }}/services/mosquitto/mosquitto.conf"
+    mode: 0644
+
+- name: Create the mosquitto container
+  docker_container:
+    name: mosquitto
+    image: eclipse-mosquitto:2.0.18
+    volumes:
+      - "{{ iot_home }}/services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
+    networks:
+      - name: iot
+    restart_policy: unless-stopped

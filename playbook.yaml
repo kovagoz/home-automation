@@ -1,0 +1,21 @@
+---
+- hosts: all
+  vars:
+    iot_home: /home/vagrant
+  module_defaults:
+    apt:
+      update_cache: yes
+      cache_valid_time: 300
+  roles:
+    - common
+    - docker
+    - mosquitto
+  tasks:
+
+    - name: Launch nginx
+      docker_container:
+        name: nginx
+        image: nginx:latest
+        networks:
+          - name: iot
+        restart_policy: unless-stopped
