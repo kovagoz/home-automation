@@ -1,0 +1,19 @@
+---
+- name: Create data directory
+  file:
+    path: "{{ iot_home }}/services/nodered/data"
+    state: directory
+    recurse: yes
+    mode: 0777
+
+- name: Spin up the container
+  docker_container:
+    name: nodered
+    image: nodered/node-red:3.1.0-18-minimal
+    ports:
+      - "127.0.0.1:1880:1880"
+    volumes:
+      - "{{ iot_home }}/services/nodered/data:/data"
+    networks:
+      - name: iot
+    restart_policy: unless-stopped

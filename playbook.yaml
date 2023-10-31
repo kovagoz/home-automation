@@ -12,4 +12,5 @@
     - mosquitto
     - zigbee2mqtt
     - homebridge
+    - nodered
     - gateway
