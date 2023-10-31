@@ -11,7 +11,7 @@ up:
 
 .PHONY: down
 down:
-	vagrant destroy
+	vagrant destroy --force
 
 .PHONY: shell
 shell:
