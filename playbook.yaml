@@ -12,11 +12,4 @@
     - mosquitto
     - zigbee2mqtt
     - homebridge
-  tasks:
-    - name: Launch nginx
-      docker_container:
-        name: nginx
-        image: nginx:latest
-        networks:
-          - name: iot
-        restart_policy: unless-stopped
+    - gateway

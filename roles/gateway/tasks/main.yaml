@@ -1,0 +1,48 @@
+---
+- name: Create configuration directory
+  file:
+    path: "{{ iot_home }}/services/gateway"
+    state: directory
+    recurse: yes
+
+- name: Upload nginx configuration
+  template:
+    src: nginx.conf.j2
+    dest: "{{ iot_home }}/services/gateway/nginx.conf"
+    mode: 0644
+
+- name: Upload HTML files
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ iot_home }}/services/gateway/{{ item }}"
+    mode: 0644
+  loop:
+    - index.html
+    - login.html
+
+- name: Install python3-passlib for the htpasswd module
+  apt:
+    name: python3-passlib
+
+- name: Generate htpasswd
+  htpasswd:
+    path: "{{ iot_home }}/services/gateway/htpasswd"
+    name: admin
+    password: trallala
+    owner: root
+    group: 101 # nginx user in the container
+    mode: 0640
+
+- name: Spin up the nginx container
+  docker_container:
+    name: gateway
+    image: nginx:latest
+    volumes:
+      - "{{ iot_home }}/services/gateway/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "{{ iot_home }}/services/gateway/htpasswd:/etc/nginx/htpasswd:ro"
+      - "{{ iot_home }}/services/gateway/index.html:/usr/share/nginx/html/index.html:ro"
+      - "{{ iot_home }}/services/gateway/login.html:/usr/share/nginx/html/login.html:ro"
+    capabilities:
+      - CAP_NET_BIND_SERVICE
+    network_mode: host
+    restart_policy: unless-stopped
