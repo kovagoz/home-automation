@@ -2,12 +2,8 @@ ENV ?= local
 
 .PHONY: install
 install:
-	docker run --rm -it \
-		-v $(PWD):/host:ro \
-		-v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock \
-		-e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock \
-		-w /host \
-		kovagoz/ansible-playbook -i inventories/local playbook.yaml
+	docker run --rm -it -v $(PWD):/host:ro -w /host \
+		kovagoz/ansible-playbook -i inventories/$(ENV) playbook.yaml
 
 .PHONY: up
 up:
