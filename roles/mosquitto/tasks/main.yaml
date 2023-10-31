@@ -19,4 +19,6 @@
       - "{{ iot_home }}/services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
     networks:
       - name: iot
+    ports:
+      - '127.0.0.1:1883:1883'
     restart_policy: unless-stopped
