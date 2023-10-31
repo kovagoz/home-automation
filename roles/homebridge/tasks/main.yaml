@@ -1,0 +1,40 @@
+---
+- name: Create data directory
+  file:
+    path: "{{ iot_home }}/services/homebridge/data"
+    state: directory
+    recurse: yes
+
+- name: Upload auth.json
+  template:
+    src: auth.json.j2
+    dest: "{{ iot_home }}/services/homebridge/data/auth.json"
+    mode: 0644
+
+- name: Upload config.json
+  template:
+    src: config.json.j2
+    dest: "{{ iot_home }}/services/homebridge/data/config.json"
+    mode: 0644
+
+- name: Check if package.json exists
+  stat:
+    path: "{{ iot_home }}/services/homebridge/data/package.json"
+  register: package_json
+
+- name: Spin up the container
+  docker_container:
+    name: homebridge
+    image: oznu/homebridge:2023-01-08
+    env:
+      PGID: "1000"
+      PUID: "1000"
+      HOMEBRIDGE_CONFIG_UI: "1"
+    volumes:
+      - "{{ iot_home }}/services/homebridge/data:/homebridge"
+    network_mode: host
+    restart_policy: unless-stopped
+
+- name: Install z2m plugin
+  command: docker exec homebridge /bin/bash -c "hb-service add homebridge-z2m"
+  when: package_json.stat.exists == False

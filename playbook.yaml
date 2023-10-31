@@ -11,6 +11,7 @@
     - docker
     - mosquitto
     - zigbee2mqtt
+    - homebridge
   tasks:
     - name: Launch nginx
       docker_container:

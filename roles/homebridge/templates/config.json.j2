@@ -1,0 +1,28 @@
+{
+  "platforms": [
+    {
+      "name": "Config",
+      "host": "127.0.0.1",
+      "port": 8581,
+      "platform": "config",
+      "auth": "none",
+      "theme": "blue-grey",
+      "debug": false
+    },
+    {
+      "mqtt": {
+        "base_topic": "zigbee2mqtt",
+        "server": "mqtt://localhost:1883",
+        "reject_unauthorized": false,
+        "keepalive": 60,
+        "version": 4,
+        "disable_qos": false
+      },
+      "defaults": {
+        "exclude": false
+      },
+      "exclude_grouped_devices": false,
+      "platform": "zigbee2mqtt"
+    }
+  ]
+}
