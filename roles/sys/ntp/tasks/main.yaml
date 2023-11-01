@@ -1,0 +1,10 @@
+---
+- name: Install the NTP daemon
+  apt:
+    name: ['ntp']
+
+- name: Make sure that NPTd is running
+  service:
+    name: ntp
+    state: started
+    enabled: yes

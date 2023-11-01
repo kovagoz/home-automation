@@ -8,6 +8,7 @@
       cache_valid_time: 300
   roles:
     - sys/common
+    - sys/ntp
     - sys/locale
     - sys/docker
     - app/mosquitto
