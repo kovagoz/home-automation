@@ -8,7 +8,7 @@
 - name: Upload configuration
   copy:
     src: "{{ item }}"
-    dest: "{{ iot_home }}/services/{{ service_name }}/{{ item | basename }}"
+    dest: "{{ iot_home }}/services/{{ service_name }}/data/{{ item | basename }}"
     mode: 0644
   with_fileglob:
     - "*.json"
