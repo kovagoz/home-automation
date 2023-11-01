@@ -1,22 +1,22 @@
 ---
 - name: Create configuration directory
   file:
-    path: "{{ iot_home }}/services/{{ ansible_role_name }}"
+    path: "{{ iot_home }}/services/{{ service_name }}"
     state: directory
     recurse: yes
 
 - name: Upload configuration
   copy:
     src: mosquitto.conf
-    dest: "{{ iot_home }}/services/{{ ansible_role_name }}/mosquitto.conf"
+    dest: "{{ iot_home }}/services/{{ service_name }}/mosquitto.conf"
     mode: 0644
 
 - name: Spin up the container
   docker_container:
-    name: "{{ ansible_role_name }}"
+    name: "{{ service_name }}"
     image: eclipse-mosquitto:2.0.18
     volumes:
-      - "{{ iot_home }}/services/{{ ansible_role_name }}/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
+      - "{{ iot_home }}/services/{{ service_name }}/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
     networks:
       - name: iot
     ports:

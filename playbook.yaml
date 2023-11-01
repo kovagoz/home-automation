@@ -1,16 +1,17 @@
 ---
 - hosts: all
   vars:
-    iot_home: /home/vagrant
+    iot_home: "/home/{{ ansible_user }}"
   module_defaults:
     apt:
       update_cache: yes
       cache_valid_time: 300
   roles:
-    - common
-    - docker
-    - mosquitto
-    - zigbee2mqtt
-    - homebridge
-    - nodered
-    - gateway
+    - sys/common
+    - sys/locale
+    - sys/docker
+    - app/mosquitto
+    - app/zigbee2mqtt
+    - app/homebridge
+    - app/nodered
+    - app/gateway
