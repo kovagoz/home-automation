@@ -6,8 +6,8 @@
     recurse: yes
 
 - name: Upload configuration
-  template:
-    src: configuration.yaml.j2
+  copy:
+    src: configuration.yaml
     dest: "{{ iot_home }}/services/zigbee2mqtt/configuration.yaml"
     mode: 0644
 
