@@ -1,9 +1,10 @@
-ENV ?= local
+ENV  ?= local
+TAGS ?= all
 
 .PHONY: install
 install:
 	docker run --rm -it -v $(PWD):/host:ro -w /host \
-		kovagoz/ansible-playbook -i inventories/$(ENV) playbook.yaml
+		kovagoz/ansible-playbook -i inventories/$(ENV) --tags $(TAGS) playbook.yaml
 
 .PHONY: up
 up:
