@@ -5,17 +5,13 @@
     state: directory
     recurse: yes
 
-- name: Upload auth.json
-  template:
-    src: auth.json.j2
-    dest: "{{ iot_home }}/services/homebridge/data/auth.json"
+- name: Upload configuration
+  copy:
+    src: "{{ item }}"
+    dest: "{{ iot_home }}/services/homebridge/{{ item | basename }}"
     mode: 0644
-
-- name: Upload config.json
-  template:
-    src: config.json.j2
-    dest: "{{ iot_home }}/services/homebridge/data/config.json"
-    mode: 0644
+  with_fileglob:
+    - "*.json"
 
 - name: Check if package.json exists
   stat:
