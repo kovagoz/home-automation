@@ -3,6 +3,10 @@
   timezone:
     name: Europe/Budapest
 
+- name: Upgrade the operating system
+  apt:
+    upgrade: safe
+
 - name: Install the NTP daemon
   apt:
     name: ['ntp']
