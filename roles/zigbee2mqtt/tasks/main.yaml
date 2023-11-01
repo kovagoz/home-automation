@@ -1,27 +1,27 @@
 ---
 - name: Create data directory
   file:
-    path: "{{ iot_home }}/services/zigbee2mqtt/data"
+    path: "{{ iot_home }}/services/{{ ansible_role_name }}/data"
     state: directory
     recurse: yes
 
 - name: Upload configuration
   copy:
     src: configuration.yaml
-    dest: "{{ iot_home }}/services/zigbee2mqtt/configuration.yaml"
+    dest: "{{ iot_home }}/services/{{ ansible_role_name }}/configuration.yaml"
     mode: 0644
 
 - name: Generate PAN ID
   template:
     src: pan_id.yaml.j2
-    dest: "{{ iot_home }}/services/zigbee2mqtt/pan_id.yaml"
+    dest: "{{ iot_home }}/services/{{ ansible_role_name }}/pan_id.yaml"
     mode: 0644
     force: no # Do not overwrite if already exists.
 
 - name: Generate network key
   template:
     src: network_key.yaml.j2
-    dest: "{{ iot_home }}/services/zigbee2mqtt/network_key.yaml"
+    dest: "{{ iot_home }}/services/{{ ansible_role_name }}/network_key.yaml"
     mode: 0644
     force: no # Do not overwrite if already exists.
 
@@ -29,15 +29,15 @@
   command: set -o pipefail && ls -1 /dev/serial/by-id/* | head -n1
   register: zigbee_device
 
-- name: Create the container
+- name: Spin up the container
   docker_container:
-    name: zigbee2mqtt
+    name: "{{ ansible_role_name }}"
     image: koenkk/zigbee2mqtt:1.33.1
     volumes:
-      - "{{ iot_home }}/services/zigbee2mqtt/data:/app/data"
-      - "{{ iot_home }}/services/zigbee2mqtt/configuration.yaml:/app/configuration.yaml:ro"
-      - "{{ iot_home }}/services/zigbee2mqtt/pan_id.yaml:/app/pan_id.yaml:ro"
-      - "{{ iot_home }}/services/zigbee2mqtt/network_key.yaml:/app/network_key.yaml:ro"
+      - "{{ iot_home }}/services/{{ ansible_role_name }}/data:/app/data"
+      - "{{ iot_home }}/services/{{ ansible_role_name }}/configuration.yaml:/app/configuration.yaml:ro"
+      - "{{ iot_home }}/services/{{ ansible_role_name }}/pan_id.yaml:/app/pan_id.yaml:ro"
+      - "{{ iot_home }}/services/{{ ansible_role_name }}/network_key.yaml:/app/network_key.yaml:ro"
     networks:
       - name: iot
     devices:
