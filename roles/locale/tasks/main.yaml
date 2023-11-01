@@ -1,0 +1,14 @@
+---
+- name: Write /etc/locale.gen
+  template:
+    src: locale.gen.j2
+    dest: /etc/locale.gen
+    mode: 0644
+  notify:
+    - rebuild locales database
+
+- name: Write /etc/default/locale
+  template:
+    src: locale.j2
+    dest: /etc/default/locale
+    mode: 0644
