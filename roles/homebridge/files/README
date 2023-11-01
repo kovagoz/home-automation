@@ -1,0 +1,2 @@
+auth.json contains dummy authentication data. The reason, it exists is that
+Homebridge needs it even if user authentication is disabled.
