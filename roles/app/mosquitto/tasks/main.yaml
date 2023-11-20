@@ -1,14 +1,14 @@
 ---
 - name: Create configuration directory
   file:
-    path: "{{ iot_home }}/services/{{ service_name }}"
+    path: "{{ service_path }}"
     state: directory
     recurse: yes
 
 - name: Upload configuration
   copy:
     src: mosquitto.conf
-    dest: "{{ iot_home }}/services/{{ service_name }}/mosquitto.conf"
+    dest: "{{ service_path }}/mosquitto.conf"
     mode: 0644
 
 - name: Spin up the container
@@ -16,9 +16,9 @@
     name: "{{ service_name }}"
     image: eclipse-mosquitto:2.0.18
     volumes:
-      - "{{ iot_home }}/services/{{ service_name }}/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
+      - "{{ service_path }}/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
     networks:
-      - name: iot
+      - name: "{{ iot_network }}"
     ports:
       - '127.0.0.1:1883:1883'
     restart_policy: unless-stopped

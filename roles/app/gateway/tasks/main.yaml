@@ -1,14 +1,14 @@
 ---
 - name: Create the configuration directory
   file:
-    path: "{{ iot_home }}/services/{{ service_name }}/conf.d"
+    path: "{{ service_path }}/conf.d"
     state: directory
     recurse: yes
 
 - name: Upload configurations
   copy:
     src: "{{ item }}"
-    dest: "{{ iot_home }}/services/{{ service_name }}/conf.d/{{ item | basename }}"
+    dest: "{{ service_path }}/conf.d/{{ item | basename }}"
     mode: 0644
   with_fileglob:
     - conf.d/*.conf
@@ -18,7 +18,7 @@
 - name: Upload auth token config
   template:
     src: auth_token.conf.j2
-    dest: "{{ iot_home }}/services/{{ service_name }}/conf.d/00_auth_token.conf"
+    dest: "{{ service_path }}/conf.d/00_auth_token.conf"
     mode: 0644
     force: no
   notify:
@@ -27,7 +27,7 @@
 - name: Upload HTML files
   copy:
     src: html
-    dest: "{{ iot_home }}/services/{{ service_name }}"
+    dest: "{{ service_path }}"
 
 - name: Install python3-passlib for the htpasswd module
   apt:
@@ -35,7 +35,7 @@
 
 - name: Generate htpasswd
   htpasswd:
-    path: "{{ iot_home }}/services/{{ service_name }}/htpasswd"
+    path: "{{ service_path }}/htpasswd"
     name: admin
     password: trallala
     owner: root
@@ -47,9 +47,9 @@
     name: "{{ service_name }}"
     image: nginx:latest
     volumes:
-      - "{{ iot_home }}/services/{{ service_name }}/conf.d:/etc/nginx/conf.d:ro"
-      - "{{ iot_home }}/services/{{ service_name }}/htpasswd:/etc/nginx/htpasswd:ro"
-      - "{{ iot_home }}/services/{{ service_name }}/html:/usr/share/nginx/html:ro"
+      - "{{ service_path }}/conf.d:/etc/nginx/conf.d:ro"
+      - "{{ service_path }}/htpasswd:/etc/nginx/htpasswd:ro"
+      - "{{ service_path }}/html:/usr/share/nginx/html:ro"
     capabilities:
       - CAP_NET_BIND_SERVICE
     network_mode: host
