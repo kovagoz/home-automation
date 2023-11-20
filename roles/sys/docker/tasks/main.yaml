@@ -25,10 +25,10 @@
 
 - name: Add IoT user to the docker group
   user:
-    name: vagrant
+    name: "{{ ansible_user }}"
     groups: docker
     append: yes
 
 - name: Create IoT network
   docker_network:
-    name: iot
+    name: "{{ iot_network }}"
