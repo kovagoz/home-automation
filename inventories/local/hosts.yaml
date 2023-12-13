@@ -2,7 +2,7 @@
 all:
   hosts:
     vbox:
-      ansible_host: docker.for.mac.host.internal
+      ansible_host: host.docker.internal
       ansible_port: 2222
       ansible_connection: ssh
       ansible_user: vagrant
