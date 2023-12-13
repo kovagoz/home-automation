@@ -28,7 +28,7 @@
       - "{{ service_path }}/data:/app/data"
       - "{{ service_path }}/configuration.yaml:/app/configuration.yaml:ro"
     networks:
-      - name: iot
+      - name: "{{ iot_network }}"
     devices:
       - "{{ zigbee_device.stdout }}:/dev/ttyACM0"
     restart_policy: unless-stopped
