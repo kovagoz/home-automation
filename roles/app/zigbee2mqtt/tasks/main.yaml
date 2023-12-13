@@ -8,7 +8,7 @@
 - name: Upload configuration
   copy:
     src: configuration.yaml
-    dest: "{{ service_path }}/configuration.yaml"
+    dest: "{{ data_path }}/configuration.yaml"
     mode: 0644
 
 - name: Detect zigbee device
@@ -26,7 +26,6 @@
       ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY: "{{ zigbee_network_key | string }}"
     volumes:
       - "{{ service_path }}/data:/app/data"
-      - "{{ service_path }}/configuration.yaml:/app/configuration.yaml:ro"
     networks:
       - name: "{{ iot_network }}"
     devices:
