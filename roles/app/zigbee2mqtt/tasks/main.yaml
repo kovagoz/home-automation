@@ -12,7 +12,9 @@
     mode: 0644
 
 - name: Detect zigbee device
-  command: set -o pipefail && ls -1 /dev/serial/by-id/* | head -n1
+  shell: set -o pipefail && ls -1 /dev/serial/by-id/* | head -n1
+  args:
+    executable: /bin/bash
   register: zigbee_device
 
 - name: Spin up the container
