@@ -1,0 +1,14 @@
+---
+- name: Upload public key
+  authorized_key:
+    user: "{{ ansible_user }}"
+    key: "{{ public_key }}"
+    exclusive: yes
+
+- name: Turn off password authentication
+  copy:
+    src: pubkey_auth.conf
+    dest: /etc/ssh/sshd_config.d/pubkey_auth.conf
+    mode: 0644
+  notify:
+    - reload sshd

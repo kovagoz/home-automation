@@ -9,6 +9,8 @@
       update_cache: yes
       cache_valid_time: 300
   roles:
+    - role: sys/ssh
+      when: public_key is defined
     - sys/common
     - sys/ntp
     - sys/locale
