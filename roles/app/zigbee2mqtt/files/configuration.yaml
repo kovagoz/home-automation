@@ -8,8 +8,6 @@ serial:
   port: /dev/ttyACM0
 
 advanced:
-  pan_id: '!/app/pan_id.yaml pan_id'
-  network_key: '!/app/network_key.yaml network_key'
   log_level: debug
   log_output:
     - console

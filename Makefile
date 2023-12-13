@@ -1,6 +1,8 @@
 ENV  ?= local
 TAGS ?= all
 
+include .env
+
 ansible_docker := docker run --rm -it \
 	-v $(PWD):/host:ro \
 	-v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock \
@@ -17,6 +19,8 @@ ansible_playbook := $(ansible_docker) \
 .PHONY: install
 install:
 	$(ansible_playbook) --tags $(TAGS) \
+		--extra-vars zigbee_pan_id=$(ZIGBEE_PAN_ID) \
+		--extra-vars zigbee_network_key=$(ZIGBEE_NETWORK_KEY) \
 		playbook.yaml
 
 .PHONY: up
