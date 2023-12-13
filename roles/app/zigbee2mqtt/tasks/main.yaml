@@ -1,7 +1,7 @@
 ---
 - name: Create data directory
   file:
-    path: "{{ service_path }}/data"
+    path: "{{ data_path }}"
     state: directory
     recurse: yes
 
