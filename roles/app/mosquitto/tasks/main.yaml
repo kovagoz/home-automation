@@ -21,4 +21,7 @@
       - name: "{{ iot_network }}"
     ports:
       - '127.0.0.1:1883:1883'
+#    log_driver: fluentd
+#    log_options:
+#      fluentd-address: fluentbit:24224
     restart_policy: unless-stopped
