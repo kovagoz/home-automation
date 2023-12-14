@@ -2,7 +2,7 @@
 - name: Upload public key
   authorized_key:
     user: "{{ ansible_user }}"
-    key: "{{ public_key }}"
+    key: "{{ ssh_pubkey }}"
     exclusive: yes
 
 - name: Turn off password authentication

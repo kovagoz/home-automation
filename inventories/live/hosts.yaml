@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+    rpi:
+      ansible_host: "{{ ssh_host }}"
+      ansible_port: 22
+      ansible_connection: ssh
+      ansible_user: "{{ ssh_username }}"
+      ansible_become: true
+      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o PreferredAuthentications=password,publickey"
+      ansible_ssh_pass: "{{ ssh_password }}"

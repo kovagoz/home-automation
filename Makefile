@@ -21,6 +21,10 @@ install:
 	$(ansible_playbook) --tags $(TAGS) \
 		--extra-vars zigbee_pan_id=$(ZIGBEE_PAN_ID) \
 		--extra-vars zigbee_network_key=$(ZIGBEE_NETWORK_KEY) \
+		--extra-vars ssh_host=$(REMOTE_HOST) \
+		--extra-vars ssh_username=$(REMOTE_USERNAME) \
+		--extra-vars ssh_password=$(REMOTE_PASSWORD) \
+		--extra-vars 'ssh_pubkey=$(REMOTE_PUBKEY)' \
 		playbook.yaml
 
 .PHONY: up
