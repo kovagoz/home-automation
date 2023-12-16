@@ -10,6 +10,8 @@
     src: configuration.yaml
     dest: "{{ data_path }}/configuration.yaml"
     mode: 0644
+  notify:
+    - Restart Zigbee2MQTT
 
 - name: Detect zigbee device
   shell: set -o pipefail && ls -1 /dev/serial/by-id/* | head -n1
