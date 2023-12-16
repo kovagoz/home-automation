@@ -1,14 +1,14 @@
 ---
 - name: Create data directory
   file:
-    path: "{{ service_path }}/data"
+    path: "{{ data_path }}"
     state: directory
     recurse: yes
 
 - name: Upload configuration
   copy:
     src: "{{ item }}"
-    dest: "{{ service_path }}/data/{{ item | basename }}"
+    dest: "{{ data_path }}/{{ item | basename }}"
     mode: 0644
   with_fileglob:
     - "*.json"
@@ -16,7 +16,7 @@
 # If it does not exist, it means that Homebridge has never been started.
 - name: Check if package.json exists
   stat:
-    path: "{{ service_path }}/data/package.json"
+    path: "{{ data_path }}/package.json"
   register: package_json
 
 - name: Spin up the container
@@ -28,7 +28,7 @@
       PUID: "1000"
       HOMEBRIDGE_CONFIG_UI: "1"
     volumes:
-      - "{{ service_path }}/data:/homebridge"
+      - "{{ data_path }}:/homebridge"
     # Because it's necessary to be on the same subnet as the HomeKit controller.
     # (it's an mDNS thing, I guess)
     network_mode: host
