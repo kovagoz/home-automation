@@ -11,12 +11,31 @@
   roles:
     - role: sys/ssh
       when: public_key is defined
-    - sys/common
-    - sys/ntp
-    - sys/locale
-    - sys/docker
-    - app/mosquitto
-    - app/zigbee2mqtt
-    - app/homebridge
-    - app/nodered
-    - app/gateway
+      tags: [sys, ssh]
+
+    - role: sys/common
+      tags: [sys, common]
+
+    - role: sys/ntp
+      tags: [sys, ntp]
+
+    - role: sys/locale
+      tags: [sys, locale]
+
+    - role: sys/docker
+      tags: [sys, docker]
+
+    - role: app/mosquitto
+      tags: [app, mosquitto]
+
+    - role: app/zigbee2mqtt
+      tags: [app, zigbee2mqtt]
+
+    - role: app/homebridge
+      tags: [app, homebridge]
+
+    - role: app/nodered
+      tags: [app, nodered]
+
+    - role: app/gateway
+      tags: [app, gateway]
