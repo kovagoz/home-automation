@@ -1,9 +1,8 @@
 ---
 - hosts: all
   vars:
-    iot_home: "/home/{{ ansible_user }}"
+    iot_home: /opt/iot
     iot_network: iot
-    iot_services_path: "{{ iot_home }}/services"
   module_defaults:
     apt:
       update_cache: yes
