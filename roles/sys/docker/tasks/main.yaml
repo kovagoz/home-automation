@@ -14,12 +14,3 @@
 - name: Create IoT network
   docker_network:
     name: "{{ iot_network }}"
-
-- name: Inspect the IoT network
-  docker_network_info:
-    name: "{{ iot_network }}"
-  register: iot_network_info
-
-- name: Register the IP address of gateway
-  set_fact:
-    docker_host_ip: "{{ iot_network_info.network.IPAM.Config[0].Gateway }}"
