@@ -16,3 +16,9 @@
 - name: Upgrade the operating system
   apt:
     upgrade: safe
+
+- name: Install some useful tools
+  apt:
+    name:
+      - dnsutils
+      - net-tools
