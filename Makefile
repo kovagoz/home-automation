@@ -25,8 +25,8 @@ install:
 		--extra-vars ssh_username=$(REMOTE_USERNAME) \
 		--extra-vars ssh_password=$(REMOTE_PASSWORD) \
 		--extra-vars 'ssh_pubkey=$(REMOTE_PUBKEY)' \
-		--extra-vars dashboard_auth_user=$(DASHBOARD_AUTH_USER) \
-		--extra-vars dashboard_auth_password=$(DASHBOARD_AUTH_PASSWORD) \
+		--extra-vars dashboard_username=$(DASHBOARD_USERNAME) \
+		--extra-vars dashboard_password=$(DASHBOARD_PASSWORD) \
 		playbook.yaml
 
 .PHONY: up
