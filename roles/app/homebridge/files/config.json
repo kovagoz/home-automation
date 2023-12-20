@@ -12,7 +12,7 @@
     {
       "mqtt": {
         "base_topic": "zigbee2mqtt",
-        "server": "mqtt://localhost:1883",
+        "server": "mqtt://127.0.0.1:1883",
         "reject_unauthorized": false,
         "keepalive": 60,
         "version": 4,
