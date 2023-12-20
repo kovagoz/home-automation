@@ -1,4 +1,0 @@
----
-- name: Reload nginx
-  command: docker exec gateway nginx -s reload
-  when: nginx_container.exists

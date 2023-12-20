@@ -1,0 +1,4 @@
+---
+- name: Reload nginx
+  command: docker exec {{ service_name }} nginx -s reload
+  when: nginx_container.exists
