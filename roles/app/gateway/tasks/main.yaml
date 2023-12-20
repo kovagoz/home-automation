@@ -5,6 +5,11 @@
     state: directory
     recurse: yes
 
+- name: Check if the container exists
+  docker_container_info:
+    name: "{{ service_name }}"
+  register: nginx_container
+
 - name: Upload configurations
   copy:
     src: "{{ item }}"
@@ -13,7 +18,7 @@
   with_fileglob:
     - conf.d/*.conf
   notify:
-    - reload nginx
+    - Reload nginx
 
 - name: Upload auth token config
   template:
@@ -22,7 +27,7 @@
     mode: 0644
     force: no
   notify:
-    - reload nginx
+    - Reload nginx
 
 - name: Upload HTML files
   copy:
