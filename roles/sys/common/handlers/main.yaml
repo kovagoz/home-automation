@@ -1,0 +1,5 @@
+---
+- name: Reload Avahi daemon
+  service:
+    name: avahi-daemon
+    state: reloaded
