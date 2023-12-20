@@ -3,6 +3,12 @@
   hostname:
     name: "{{ iot_hostname }}"
 
+- name: Update /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    line: 127.0.1.1  {{ iot_hostname }}
+
 - name: Set timezone
   timezone:
     name: Europe/Budapest
