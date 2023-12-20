@@ -41,8 +41,8 @@
 - name: Generate htpasswd
   htpasswd:
     path: "{{ service_path }}/htpasswd"
-    name: "{{ gateway_auth_user }}"
-    password: "{{ gateway_auth_password }}"
+    name: "{{ dashboard_auth_user }}"
+    password: "{{ dashboard_auth_password }}"
     owner: root
     group: 101 # nginx user in the container
     mode: 0640

@@ -36,5 +36,5 @@
     - role: app/nodered
       tags: [app, nodered]
 
-    - role: app/gateway
-      tags: [app, gateway]
+    - role: app/dashboard
+      tags: [app, dashboard]
