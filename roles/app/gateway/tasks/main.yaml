@@ -20,7 +20,7 @@
   notify:
     - Reload nginx
 
-- name: Upload auth token config
+- name: Upload auth token
   template:
     src: auth_token.conf.j2
     dest: "{{ service_path }}/conf.d/00_auth_token.conf"
@@ -41,8 +41,8 @@
 - name: Generate htpasswd
   htpasswd:
     path: "{{ service_path }}/htpasswd"
-    name: admin
-    password: trallala
+    name: "{{ gateway_auth_user }}"
+    password: "{{ gateway_auth_password }}"
     owner: root
     group: 101 # nginx user in the container
     mode: 0640
