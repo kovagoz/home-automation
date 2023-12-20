@@ -1,6 +1,6 @@
 ---
 service_name: "{{ ansible_role_name | basename }}"
-service_path: "{{ iot_services_path }}/{{ service_name }}"
+service_path: "{{ iot_home }}/{{ service_name }}"
 data_path: "{{ service_path }}/data"
 zigbee_pan_id: GENERATE
 zigbee_network_key: GENERATE

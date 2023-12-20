@@ -5,6 +5,11 @@
     state: directory
     recurse: yes
 
+- name: Check if the container exists
+  docker_container_info:
+    name: "{{ service_name }}"
+  register: zigbee2mqtt_container
+
 - name: Upload configuration
   copy:
     src: configuration.yaml
