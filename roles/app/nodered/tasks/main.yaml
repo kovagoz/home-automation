@@ -1,10 +1,9 @@
 ---
 - name: Create data directory
   file:
-    path: "{{ service_path }}/data"
+    path: "{{ data_path }}"
     state: directory
     recurse: yes
-    mode: 0777
 
 - name: Spin up the container
   docker_container:
@@ -13,7 +12,7 @@
     ports:
       - "127.0.0.1:1880:1880"
     volumes:
-      - "{{ service_path }}/data:/data"
+      - "{{ data_path }}:/data"
     networks:
-      - name: iot
+      - name: "{{ iot_network }}"
     restart_policy: unless-stopped
