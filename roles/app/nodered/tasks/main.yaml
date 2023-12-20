@@ -1,9 +1,14 @@
 ---
+- name: Create service directory
+  file:
+    path: "{{ service_path }}"
+    state: directory
+
 - name: Create data directory
   file:
     path: "{{ data_path }}"
     state: directory
-    recurse: yes
+    mode: 0777
 
 - name: Spin up the container
   docker_container:
