@@ -1,7 +1,14 @@
 ENV  ?= local
 TAGS ?= all
 
-include .env
+# Only the live environment is configurable.
+# You don't need to configure the local environment.
+ifeq ($(ENV),live)
+-include .env
+endif
+
+.env:
+	cp .env.example $@
 
 ansible_docker := docker run --rm -it \
 	-v $(PWD):/host:ro \
