@@ -1,14 +1,4 @@
 ---
-- name: Set hostname
-  hostname:
-    name: "{{ iot_hostname }}"
-
-- name: Update /etc/hosts
-  lineinfile:
-    path: /etc/hosts
-    regexp: '^127\.0\.1\.1'
-    line: 127.0.1.1  {{ iot_hostname }}
-
 - name: Set timezone
   timezone:
     name: Europe/Budapest
@@ -32,23 +22,3 @@
     name:
       - dnsutils
       - net-tools
-
-- name: Set up mDNS
-  block:
-    - name: Install Avahi daemon
-      apt:
-        name: avahi-daemon
-
-    - name: Start Avahi daemon
-      service:
-        name: avahi-daemon
-        state: started
-        enabled: true
-
-    - name: Upload configuration
-      copy:
-        src: avahi-daemon.conf
-        dest: /etc/avahi/avahi-daemon.conf
-        mode: 0644
-      notify:
-        - Reload Avahi daemon
