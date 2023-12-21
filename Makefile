@@ -46,4 +46,10 @@ down:
 
 .PHONY: shell
 shell:
+ifeq ($(ENV),local)
 	vagrant ssh
+else ifeq ($(ENV),live)
+	ssh $(REMOTE_USERNAME)@$(REMOTE_HOST) -o PreferredAuthentications=password,publickey
+else
+$(error Unknown environment)
+endif
