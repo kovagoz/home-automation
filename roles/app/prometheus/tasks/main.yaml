@@ -1,0 +1,23 @@
+---
+- name: Create service directory
+  file:
+    path: "{{ service_path }}"
+    state: directory
+
+- name: Create data directory
+  file:
+    path: "{{ data_path }}"
+    state: directory
+    mode: 0777
+
+- name: Spin up the container
+  docker_container:
+    name: "{{ service_name }}"
+    image: "bitnami/prometheus:2"
+    volumes:
+      - "{{ service_path }}/data:/opt/bitnami/prometheus/data"
+    networks:
+      - name: "{{ iot_network }}"
+    ports:
+      - '127.0.0.1:9090:9090'
+    restart_policy: unless-stopped
