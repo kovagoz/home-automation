@@ -10,6 +10,7 @@
     src: "{{ item }}"
     dest: "{{ data_path }}/{{ item | basename }}"
     mode: 0644
+    force: false
   with_fileglob:
     - "*.json"
 
