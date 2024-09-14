@@ -13,7 +13,7 @@
 - name: Spin up the container
   docker_container:
     name: "{{ service_name }}"
-    image: nodered/node-red:3.1.0-18-minimal
+    image: nodered/node-red:3.1.9-18-minimal
     ports:
       - "127.0.0.1:1880:1880"
     volumes:
