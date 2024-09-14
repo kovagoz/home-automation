@@ -1,7 +1,0 @@
----
-- name: Restart Zigbee2MQTT
-  docker_container:
-    name: "{{ service_name }}"
-    state: started
-    restart: true
-  when: zigbee2mqtt_container.exists

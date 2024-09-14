@@ -5,18 +5,12 @@
     state: directory
     recurse: yes
 
-- name: Check if the container exists
-  docker_container_info:
-    name: "{{ service_name }}"
-  register: zigbee2mqtt_container
-
 - name: Upload configuration
   copy:
     src: configuration.yaml
     dest: "{{ data_path }}/configuration.yaml"
     mode: 0644
-  notify:
-    - Restart Zigbee2MQTT
+    force: false
 
 - name: Detect zigbee device
   shell: set -o pipefail && ls -1 /dev/serial/by-id/* | head -n1
