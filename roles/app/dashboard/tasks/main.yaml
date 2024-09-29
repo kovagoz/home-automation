@@ -58,4 +58,3 @@
     capabilities:
       - CAP_NET_BIND_SERVICE
     network_mode: host
-    restart_policy: unless-stopped

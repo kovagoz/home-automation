@@ -28,5 +28,4 @@
       - name: "{{ iot_network }}"
     ports:
       - '127.0.0.1:9090:9090'
-    restart_policy: unless-stopped
     restart: "{{ prometheus_config.changed | default(false) }}"

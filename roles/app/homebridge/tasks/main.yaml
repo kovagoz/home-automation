@@ -33,7 +33,6 @@
     # Because it's necessary to be on the same subnet as the HomeKit controller.
     # (it's an mDNS thing, I guess)
     network_mode: host
-    restart_policy: unless-stopped
 
 - name: Install z2m plugin # at the first run
   command: "docker exec {{ service_name }} /bin/bash -c 'hb-service add homebridge-z2m'"

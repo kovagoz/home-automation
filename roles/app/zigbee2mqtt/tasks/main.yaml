@@ -33,4 +33,3 @@
       - '127.0.0.1:8080:8080'
     devices:
       - "{{ zigbee_device.stdout }}:/dev/ttyACM0"
-    restart_policy: unless-stopped

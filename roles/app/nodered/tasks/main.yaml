@@ -20,4 +20,3 @@
       - "{{ data_path }}:/data"
     networks:
       - name: "{{ iot_network }}"
-    restart_policy: unless-stopped
