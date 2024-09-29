@@ -9,3 +9,8 @@ all:
       ansible_become: true
       ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o PreferredAuthentications=password,publickey"
       ansible_ssh_pass: "{{ ssh_password }}"
+      dashboard_username: "{{ lookup('env', 'DASHBOARD_USERNAME') }}"
+      dashboard_password: "{{ lookup('env', 'DASHBOARD_PASSWORD') }}"
+
+      zigbee_pan_id: "{{ lookup('env', 'ZIGBEE_PAN_ID') }}"
+      zigbee_network_key: "{{ lookup('env', 'ZIGBEE_NETWORK_KEY') }}"

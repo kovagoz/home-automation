@@ -7,6 +7,8 @@ ifeq ($(ENV),live)
 -include .env
 endif
 
+export
+
 .env:
 	cp .env.example $@
 
@@ -16,14 +18,10 @@ ansible_playbook := ansible-playbook -i inventories/$(ENV)
 .PHONY: install
 install:
 	$(ansible_playbook) --tags $(TAGS) \
-		--extra-vars zigbee_pan_id=$(ZIGBEE_PAN_ID) \
-		--extra-vars zigbee_network_key=$(ZIGBEE_NETWORK_KEY) \
 		--extra-vars ssh_host=$(REMOTE_HOST) \
 		--extra-vars ssh_username=$(REMOTE_USERNAME) \
 		--extra-vars ssh_password=$(REMOTE_PASSWORD) \
 		--extra-vars 'ssh_pubkey=$(REMOTE_PUBKEY)' \
-		--extra-vars dashboard_username=$(DASHBOARD_USERNAME) \
-		--extra-vars dashboard_password=$(DASHBOARD_PASSWORD) \
 		playbook.yaml
 
 .PHONY: up
