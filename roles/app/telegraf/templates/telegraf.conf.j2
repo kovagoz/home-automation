@@ -1,0 +1,32 @@
+# --- INPUTS ------------------
+
+[[inputs.mqtt_consumer]]
+    alias         = "thermometers"
+    name_override = "environment"
+    servers       = ["tcp://mosquitto:1883"]
+    topics        = ["zigbee2mqtt/+/+/thermometer"]
+    data_format   = "json"
+    topic_tag     = "" # No topic tag will be created
+    fieldinclude  = ["humidity", "temperature", "battery"]
+
+    # Happens before filtering
+    [[inputs.mqtt_consumer.topic_parsing]]
+        topic = "zigbee2mqtt/#"
+        tags  = "_/room"
+
+# --- OUTPUTS -----------------
+
+[[outputs.file]]
+    files = ["stdout"]
+
+[[outputs.http]]
+    url         = "{{ grafana_url }}"
+    data_format = "prometheusremotewrite"
+    username    = "@{docker_secretstore:grafana_username}"
+    password    = "@{docker_secretstore:grafana_password}"
+
+# --- SECRET STORES -----------
+
+[[secretstores.docker]]
+    id   = "docker_secretstore"
+    path = "/run/secrets"

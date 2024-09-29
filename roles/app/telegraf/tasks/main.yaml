@@ -1,0 +1,36 @@
+---
+- name: Create service directory
+  file:
+    path: "{{ service_path }}"
+    state: directory
+
+- name: Upload configuration
+  template:
+    src: telegraf.conf.j2
+    dest: "{{ service_path }}/telegraf.conf"
+    mode: 0644
+  register: telegraf_config
+
+- name: Create secret for Grafana username
+  copy:
+    dest: "{{ service_path }}/grafana_username"
+    content: "{{ grafana_username }}"
+    mode: 0644
+
+- name: Create secret for Grafana password
+  copy:
+    dest: "{{ service_path }}/grafana_password"
+    content: "{{ grafana_password  }}"
+    mode: 0644
+
+- name: Spin up the container
+  docker_container:
+    name: "{{ service_name }}"
+    image: "telegraf:alpine"
+    volumes:
+      - "{{ service_path }}/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+      - "{{ service_path }}/grafana_username:/run/secrets/grafana_username:ro"
+      - "{{ service_path }}/grafana_password:/run/secrets/grafana_password:ro"
+    networks:
+      - name: "{{ iot_network }}"
+    restart: "{{ telegraf_config.changed | default(false) }}"

@@ -45,5 +45,8 @@
     - role: app/prometheus
       tags: [app, prometheus]
 
+    - role: app/telegraf
+      tags: [app, telegraf]
+
     - role: app/dashboard
       tags: [app, dashboard]
