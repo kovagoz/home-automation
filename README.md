@@ -18,6 +18,7 @@ make install ENV=live TAGS=dashboard
 
 ## Architecture
 
+```
                                                   +-----------+
                                                   |  Grafana  |
         +------------------------------+          +-----------+
@@ -37,3 +38,4 @@ make install ENV=live TAGS=dashboard
 +------------+
 |   HomeKit  |
 +------------+
+```
