@@ -42,9 +42,6 @@
     - role: app/nodered
       tags: [app, nodered]
 
-    - role: app/prometheus
-      tags: [app, prometheus]
-
     - role: app/telegraf
       tags: [app, telegraf]
 
